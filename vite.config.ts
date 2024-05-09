@@ -7,4 +7,5 @@ export default defineConfig({
   optimizeDeps: {
     include: ['victory', '@emotion/styled'],
   },
+  base: '/data-visualization/',
 });
