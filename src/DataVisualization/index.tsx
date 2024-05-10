@@ -33,7 +33,7 @@ interface ChartData {
   date?: Date;
 }
 
-export const ScatterPlot = ({ x, y, data }: Props) => {
+export const DataVisualization = ({ x, y, data }: Props) => {
   const chartData: ChartData[] = data.map((d) => ({
     x: d[x as keyof SongData] as number | Date,
     y: d[y as keyof SongData] as number | Date,
@@ -174,7 +174,7 @@ export const ScatterPlot = ({ x, y, data }: Props) => {
           initialState={{
             pagination: {
               paginationModel: {
-                pageSize: 10,
+                pageSize: 9,
               },
             },
           }}
@@ -186,4 +186,4 @@ export const ScatterPlot = ({ x, y, data }: Props) => {
   );
 };
 
-export default ScatterPlot;
+export default DataVisualization;

@@ -22,6 +22,21 @@ export const sortOptions = [
     text: 'Day of the month when the song was released',
   },
   {
+    label: 'In Spotify Playlists',
+    value: 'in_spotify_playlists',
+    text: 'Number of Spotify playlists the song is in',
+  },
+  {
+    label: 'In Apple Playlists',
+    value: 'in_apple_playlists',
+    text: 'Number of Apple playlists the song is in',
+  },
+  {
+    label: 'In Deezer Playlists',
+    value: 'in_deezer_playlists',
+    text: 'Number of Deezer playlists the song is in',
+  },
+  {
     label: 'Beats Per Minute',
     value: 'bpm',
     text: 'Beats per minute of the song',

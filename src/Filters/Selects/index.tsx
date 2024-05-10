@@ -1,7 +1,8 @@
 // FilterAutocompletes.tsx
 import { Autocomplete } from '@mui/material';
 import { TextField, Stack } from '@mui/material';
-import { SongData } from '../../types';
+import { getArtistNames, getYearReleased } from '../../utils';
+import useFilter from '../../Context/useFilter';
 
 interface Option {
   label: string;
@@ -10,24 +11,11 @@ interface Option {
   objKey: string;
 }
 
-interface FilterAutocompletesProps {
-  setData: (data: SongData[]) => void;
-  resetData: () => void;
-  names: {
-    name: string;
-    count: number;
-  }[];
-  years: string[];
-  jsonDataWithDate: SongData[];
-}
-
-export const FilterAutocompletes: React.FC<FilterAutocompletesProps> = ({
-  setData,
-  resetData,
-  names,
-  years,
-  jsonDataWithDate,
-}) => {
+export const FilterAutocompletes: React.FC = () => {
+  const { originalData, setFilter, resetData } = useFilter();
+  const names = getArtistNames(originalData).sort((a, b) => b.count - a.count);
+  const years = getYearReleased(originalData);
+  // Map the names and years to the combined options
   const namesCollection: Option[] = names.map((option) => ({
     label: `${option.name} (${option.count})`,
     value: option.name,
@@ -50,18 +38,14 @@ export const FilterAutocompletes: React.FC<FilterAutocompletesProps> = ({
         }}
         groupBy={(option) => option.key}
         options={combined}
-        renderInput={(params) => <TextField {...params} label="Filter" />}
+        renderInput={(params) => (
+          <TextField {...params} label="Artist or Year" />
+        )}
         onChange={(_e, value) => {
           if (value?.objKey === 'artist') {
-            setData(
-              jsonDataWithDate.filter((d) => d.artist.includes(value.value))
-            );
+            setFilter('byArtist', { artist: value.value });
           } else if (value?.objKey === 'date') {
-            setData(
-              jsonDataWithDate.filter(
-                (d) => d.released_year === parseInt(value.value, 10)
-              )
-            );
+            setFilter('byYear', { year: value.value });
           } else {
             resetData();
           }
